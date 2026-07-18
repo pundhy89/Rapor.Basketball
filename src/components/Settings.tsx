@@ -1,6 +1,7 @@
 import { useStore } from '../store';
-import { Download, Save, Plus, Trash2, Database, AlertTriangle, CheckCircle, CloudUpload, CloudDownload } from 'lucide-react';
+import { Download, Save, Plus, Trash2, Database, AlertTriangle, CheckCircle, CloudUpload, CloudDownload, ArrowLeft } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { EvaluationPeriod } from '../types';
 import { cn } from './Layout';
 import { calculateStudentScore } from '../utils/calculations';
@@ -9,6 +10,7 @@ import { initDrive, syncToDrive, restoreFromDrive } from '../lib/driveSync';
 
 export function Settings() {
   const store = useStore();
+  const navigate = useNavigate();
   const { settings, updateSettings, students, assessments, attendances, injectSeedData, resetData, setAllData } = store;
   const [localSettings, setLocalSettings] = useState(settings);
   const [showSaveSuccess, setShowSaveSuccess] = useState(false);
@@ -112,8 +114,16 @@ export function Settings() {
   };
 
   return (
-    <div className="space-y-6 pb-6">
-      <h2 className="text-xl font-bold">Pengaturan</h2>
+    <div className="space-y-6 pb-6 relative">
+      <div className="flex items-center gap-3">
+        <button 
+          onClick={() => navigate(-1)} 
+          className="p-2 bg-gray-100 dark:bg-white/5 rounded-full hover:bg-gray-200 dark:hover:bg-white/10 transition-colors"
+        >
+          <ArrowLeft className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+        </button>
+        <h2 className="text-xl font-bold">Pengaturan</h2>
+      </div>
 
       {/* Academy Settings */}
       <div className="bg-white dark:bg-[#1A1C29] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm space-y-4">

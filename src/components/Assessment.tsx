@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useStore } from '../store';
 import { ClassLevel, DailyAssessment, AttendanceStatus, Attendance as AttendanceType } from '../types';
-import { Star, CheckCircle } from 'lucide-react';
+import { Star, CheckCircle, Search } from 'lucide-react';
 import { cn } from './Layout';
 import { format } from 'date-fns';
 
@@ -29,10 +29,17 @@ export function Assessment() {
     character: 0,
   });
   const [attendance, setAttendance] = useState<AttendanceStatus>('Hadir');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const [showSuccess, setShowSuccess] = useState(false);
 
-  const classStudents = useMemo(() => selectedClass === 'Semua' ? students : students.filter(s => s.classLevel === selectedClass), [students, selectedClass]);
+  const classStudents = useMemo(() => {
+    let filtered = selectedClass === 'Semua' ? students : students.filter(s => s.classLevel === selectedClass);
+    if (searchQuery) {
+      filtered = filtered.filter(s => s.name.toLowerCase().includes(searchQuery.toLowerCase()));
+    }
+    return filtered;
+  }, [students, selectedClass, searchQuery]);
 
   const handleSave = () => {
     if (!selectedStudentId) return;
@@ -76,6 +83,18 @@ export function Assessment() {
       </div>
 
       <div className="space-y-4">
+        {/* Search Bar */}
+        <div className="relative mb-4">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+          <input
+            type="text"
+            placeholder="Cari nama siswa..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-9 pr-4 py-2.5 bg-white dark:bg-[#1A1C29] border border-gray-200 dark:border-gray-800 rounded-xl text-sm focus:outline-none focus:border-blue-500"
+          />
+        </div>
+
         {/* Class Selector */}
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Pilih Kelas</label>

@@ -55,9 +55,7 @@ const debouncedSync = (state: any) => {
         }
       }
       const stateToSave = { ...cleanState, settings: { ...cleanState.settings } };
-      if (stateToSave.settings?.bgmList) {
-        stateToSave.settings.bgmList = stateToSave.settings.bgmList.filter((b: any) => !b.url.startsWith('data:audio'));
-      }
+      delete stateToSave.settings.bgmList;
       await setDoc(docRef, stateToSave);
       console.log('Synced to Firebase');
     } catch (e) {

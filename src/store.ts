@@ -1,46 +1,5 @@
 import { create } from 'zustand';
-import { persist, createJSONStorage, StateStorage } from 'zustand/middleware';
 import { Student, Coach, DailyAssessment, Attendance, PeriodEvaluation, Settings, ScheduleItem } from './types';
-import { get, set, del } from 'idb-keyval';
-
-const idbStorage: StateStorage = {
-  getItem: async (name: string): Promise<string | null> => {
-    try {
-      let value = (await get(name)) || null;
-      if (!value) {
-        const localValue = localStorage.getItem(name);
-        if (localValue) {
-          value = localValue;
-          try { await set(name, localValue); } catch(e) {}
-        }
-      }
-      return value;
-    } catch (error) {
-      console.warn('IDB get failed, using localStorage', error);
-      return localStorage.getItem(name);
-    }
-  },
-  setItem: async (name: string, value: string): Promise<void> => {
-    try {
-      await set(name, value);
-    } catch (error) {
-      console.warn('IDB set failed, using localStorage', error);
-      try {
-        localStorage.setItem(name, value);
-      } catch (e) {
-        console.error('LocalStorage set failed (quota?)', e);
-      }
-    }
-  },
-  removeItem: async (name: string): Promise<void> => {
-    try {
-      await del(name);
-    } catch (error) {
-      console.warn('IDB remove failed, using localStorage', error);
-    }
-    localStorage.removeItem(name);
-  },
-};
 
 interface AppState {
   students: Student[];
@@ -94,9 +53,7 @@ const defaultSettings: Settings = {
   theme: 'light',
 };
 
-export const useStore = create<AppState>()(
-  persist(
-    (set) => ({
+export const useStore = create<AppState>()((set) => ({
       students: [],
       coaches: [],
       assessments: [],
@@ -161,13 +118,8 @@ export const useStore = create<AppState>()(
           schedules: data.schedules || [],
           settings: {
             ...(data.settings || defaultSettings),
-            bgmList: data.settings?.bgmList || state.settings?.bgmList || []
+            bgmList: state.settings?.bgmList || []
           },
         })),
-    }),
-    {
-      name: 'dragons-academy-storage',
-      storage: createJSONStorage(() => idbStorage),
-    }
-  )
+    })
 );

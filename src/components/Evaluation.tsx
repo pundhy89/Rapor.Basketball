@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { useStore } from '../store';
 import { ClassLevel, PeriodEvaluation } from '../types';
 import { cn } from './Layout';
-import { CheckCircle } from 'lucide-react';
+import { CheckCircle, Search } from 'lucide-react';
 import { format } from 'date-fns';
 
 const CLASSES: ClassLevel[] = ['SD Lower', 'SD Berkembang', 'SD Upper', 'SMP', 'SMA'];
@@ -10,8 +10,9 @@ const CLASSES: ClassLevel[] = ['SD Lower', 'SD Berkembang', 'SD Upper', 'SMP', '
 export function Evaluation() {
   const { students, settings, addEvaluation } = useStore();
   
-  const [selectedClass, setSelectedClass] = useState<ClassLevel>('SD Lower');
+  const [selectedClass, setSelectedClass] = useState<ClassLevel | 'Semua'>('Semua');
   const [selectedStudentId, setSelectedStudentId] = useState<string>('');
+  const [searchQuery, setSearchQuery] = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
 
   const [notes, setNotes] = useState({
@@ -21,7 +22,13 @@ export function Evaluation() {
     recommendation: ''
   });
 
-  const classStudents = useMemo(() => students.filter(s => s.classLevel === selectedClass), [students, selectedClass]);
+  const classStudents = useMemo(() => {
+    let filtered = selectedClass === 'Semua' ? students : students.filter(s => s.classLevel === selectedClass);
+    if (searchQuery) {
+      filtered = filtered.filter(s => s.name.toLowerCase().includes(searchQuery.toLowerCase()));
+    }
+    return filtered;
+  }, [students, selectedClass, searchQuery]);
 
   const handleSave = () => {
     if (!selectedStudentId) return;
@@ -49,13 +56,25 @@ export function Evaluation() {
       </div>
 
       <div className="space-y-4">
+        {/* Search Bar */}
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+          <input
+            type="text"
+            placeholder="Cari nama siswa..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-9 pr-4 py-2.5 bg-white dark:bg-[#1A1C29] border border-gray-200 dark:border-gray-800 rounded-xl text-sm focus:outline-none focus:border-blue-500"
+          />
+        </div>
+
         {/* Class Selector */}
         <div>
           <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
-            {CLASSES.map(c => (
+            {['Semua', ...CLASSES].map(c => (
               <button
                 key={c}
-                onClick={() => { setSelectedClass(c); setSelectedStudentId(''); }}
+                onClick={() => { setSelectedClass(c as any); setSelectedStudentId(''); }}
                 className={cn("px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap border", selectedClass === c ? "bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-400" : "bg-white dark:bg-[#1A1C29] border-gray-200 dark:border-gray-800 text-gray-500 dark:text-gray-400")}
               >
                 {c}

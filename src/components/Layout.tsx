@@ -210,7 +210,7 @@ export function Layout() {
         {/* The Menu Box */}
         <div 
           className={cn(
-            "flex flex-col gap-1 bg-white/70 dark:bg-black/70 backdrop-blur-md border border-gray-100 dark:border-gray-800 rounded-2xl shadow-[0_8px_25px_rgba(0,0,0,0.15)] p-1 transition-all duration-500 origin-bottom ease-out max-h-[60vh] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]",
+            "flex flex-col gap-1 bg-white/70 dark:bg-black/70 backdrop-blur-md border border-gray-100 dark:border-gray-800 rounded-2xl shadow-[0_8px_25px_rgba(0,0,0,0.15)] p-1 transition-all duration-500 origin-bottom ease-out max-h-[85vh] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]",
             isMenuOpen ? "scale-100 opacity-100 translate-y-0 translate-x-0" : "scale-50 opacity-0 translate-y-12 pointer-events-none"
           )}
         >
