@@ -1,0 +1,6 @@
+{
+  "name": "Dragons Academy",
+  "description": "Aplikasi manajemen data siswa dan nilai",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
