@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useStore } from '../store';
-import { Download, Save, Plus, Trash2, Database, AlertTriangle, CheckCircle, CloudUpload, CloudDownload, ArrowLeft } from 'lucide-react';
+import { Download, Save, Plus, Trash2, Database, AlertTriangle, CheckCircle, CloudUpload, CloudDownload, ArrowLeft , FileJson, UploadCloud} from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { EvaluationPeriod } from '../types';
@@ -26,6 +26,48 @@ export function Settings() {
       console.log('Google Drive API ready');
     });
   }, []);
+
+  
+  const handleExportJSON = () => {
+    const state = useStore.getState();
+    const data = {
+      students: state.students,
+      coaches: state.coaches,
+      assessments: state.assessments,
+      attendances: state.attendances,
+      evaluations: state.evaluations,
+      settings: state.settings,
+      schedules: state.schedules,
+      notifications: state.notifications
+    };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `akademi_backup_${new Date().toISOString().split('T')[0]}.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleImportJSON = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const data = JSON.parse(event.target?.result as string);
+        if (confirm('Apakah Anda yakin ingin menimpa semua data saat ini dengan data dari file backup?')) {
+          setAllData(data);
+          if (data.settings) setLocalSettings(data.settings);
+          alert('Data berhasil dipulihkan!');
+        }
+      } catch (err) {
+        alert('Format file backup tidak valid!');
+      }
+    };
+    reader.readAsText(file);
+    e.target.value = '';
+  };
 
   const handleBackupToDrive = () => {
     setSyncStatus('Memulai backup...');
@@ -456,8 +498,23 @@ export function Settings() {
             </div>
           </div>
 
+          
           <div className="p-4 bg-white/10 dark:bg-white/5 backdrop-blur-md rounded-xl border border-white/20 dark:border-white/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)]">
-            <h4 className="font-bold text-white mb-1">Export Data</h4>
+            <h4 className="font-bold text-white mb-1">Local Backup (.JSON)</h4>
+            <p className="text-xs text-white mb-3">Download semua pengaturan dan data ke file JSON untuk dipindahkan ke domain lain (misal: Github Pages).</p>
+            <div className="grid grid-cols-2 gap-3">
+              <button onClick={handleExportJSON} className="w-full bg-slate-800 dark:bg-slate-200 text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 text-sm transition-colors hover:bg-slate-700">
+                <FileJson className="w-4 h-4" /> Export Backup
+              </button>
+              <label className="w-full bg-blue-600/50 hover:bg-blue-600/70 text-white font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 text-sm border border-blue-400/30 transition-colors cursor-pointer">
+                <UploadCloud className="w-4 h-4" /> Import Backup
+                <input type="file" accept=".json" onChange={handleImportJSON} className="hidden" />
+              </label>
+            </div>
+          </div>
+
+          <div className="p-4 bg-white/10 dark:bg-white/5 backdrop-blur-md rounded-xl border border-white/20 dark:border-white/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)]">
+            <h4 className="font-bold text-white mb-1">Export Data CSV</h4>
             <p className="text-xs text-white mb-3">Download semua data rapor siswa dalam format Spreadsheet (CSV).</p>
             <button onClick={handleDownloadCSV} className="w-full bg-emerald-600 text-white font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 active:bg-emerald-700 text-sm transition-colors">
               <Download className="w-4 h-4" /> Download Database CSV
