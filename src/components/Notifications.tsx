@@ -40,21 +40,21 @@ export function Notifications() {
 
   return (
     <div className="space-y-6 pb-6 animate-in fade-in slide-in-from-right-4">
-      <div className="flex items-center gap-3 sticky top-0 bg-gray-50 dark:bg-[#151720] z-10 py-2">
-        <Link to="/" className="p-2 bg-white dark:bg-[#1A1C29] border border-gray-200 dark:border-gray-800 rounded-full hover:bg-gray-100 dark:bg-white/5 transition-colors shadow-sm">
-          <ArrowLeft className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+      <div className="flex items-center gap-3 sticky top-0 bg-transparent z-10 py-2">
+        <Link to="/" className="p-2 bg-transparent dark:bg-transparent backdrop-blur-md border border-white/20 dark:border-white/20 rounded-full hover:bg-white/50 dark:bg-white/5 transition-colors shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)]">
+          <ArrowLeft className="w-5 h-5 text-white/90" />
         </Link>
         <div>
-          <h2 className="text-xl font-black text-gray-900 dark:text-white leading-tight">Notifikasi</h2>
-          <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">Informasi dan pengumuman terbaru</p>
+          <h2 className="text-xl font-black text-white tracking-wide leading-tight">Notifikasi</h2>
+          <p className="text-xs text-white/70 font-medium">Informasi dan pengumuman terbaru</p>
         </div>
       </div>
 
       <div className="space-y-3">
         {notifications.length === 0 ? (
-          <div className="bg-white dark:bg-[#1A1C29] p-8 rounded-2xl border border-gray-100 text-center shadow-sm">
-            <Bell className="w-12 h-12 text-gray-700 dark:text-gray-300 mx-auto mb-3" />
-            <p className="text-gray-500 dark:text-gray-400 font-medium">Belum ada notifikasi baru.</p>
+          <div className="bg-transparent dark:bg-transparent backdrop-blur-md p-8 rounded-2xl border border-gray-100 text-center shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)]">
+            <Bell className="w-12 h-12 text-white/90 mx-auto mb-3" />
+            <p className="text-white/70 font-medium">Belum ada notifikasi baru.</p>
           </div>
         ) : (
           notifications.map((notif) => {
@@ -66,17 +66,17 @@ export function Notifications() {
               <div 
                 key={notif.id} 
                 className={cn(
-                  "bg-white dark:bg-[#1A1C29] p-4 rounded-xl shadow-sm border flex gap-4 relative overflow-hidden",
+                  "bg-transparent dark:bg-transparent backdrop-blur-md p-4 rounded-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] border flex gap-4 relative overflow-hidden",
                   notif.isNew ? "border-blue-200 dark:border-blue-800" : "border-gray-100"
                 )}
               >
                 {notif.isNew && (
-                  <div className="absolute top-0 right-0 w-2 h-2 bg-blue-50 dark:bg-blue-900/200 rounded-full m-3" />
+                  <div className="absolute top-0 right-0 w-2 h-2 bg-white/30 dark:bg-white/50 rounded-full m-3" />
                 )}
                 
                 <div className={cn(
                   "w-10 h-10 rounded-full flex items-center justify-center shrink-0",
-                  isInfo && "bg-blue-50 text-blue-600",
+                  isInfo && "bg-blue-50 text-white",
                   isSuccess && "bg-green-50 text-green-600",
                   isWarning && "bg-amber-50 text-amber-600"
                 )}>
@@ -87,10 +87,10 @@ export function Notifications() {
                 
                 <div className="flex-1">
                   <div className="flex justify-between items-start mb-1 gap-2">
-                    <h3 className="font-bold text-gray-900 dark:text-white text-sm">{notif.title}</h3>
+                    <h3 className="font-bold text-white tracking-wide text-sm">{notif.title}</h3>
                   </div>
-                  <p className="text-gray-500 dark:text-gray-400 text-xs leading-relaxed mb-2 pr-4">{notif.message}</p>
-                  <span className="text-[10px] font-medium text-gray-500 dark:text-gray-400">{notif.time}</span>
+                  <p className="text-white/70 text-xs leading-relaxed mb-2 pr-4">{notif.message}</p>
+                  <span className="text-[10px] font-medium text-white/70">{notif.time}</span>
                 </div>
               </div>
             );

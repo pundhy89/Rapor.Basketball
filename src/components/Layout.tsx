@@ -14,6 +14,18 @@ export function Layout() {
   const navigate = useNavigate();
   const settings = useStore(state => state.settings);
   const updateSettings = useStore(state => state.updateSettings);
+
+  const students = useStore(state => state.students);
+  const updateStudent = useStore(state => state.updateStudent);
+  
+  useEffect(() => {
+    students.forEach(s => {
+      if (s.studentId && s.studentId.startsWith('DA-2026-')) {
+        updateStudent({ ...s, studentId: s.studentId.replace('DA-2026-', 'DBA-') });
+      }
+    });
+  }, [students, updateStudent]);
+
   const academy = settings.academy;
   
   const [isPlaying, setIsPlaying] = useState(false);
@@ -43,6 +55,10 @@ export function Layout() {
       document.documentElement.classList.remove('dark');
     }
   }, [settings.theme]);
+
+  const toggleTheme = () => {
+    updateSettings({ ...settings, theme: settings.theme === 'dark' ? 'light' : 'dark' });
+  };
 
   // BGM Player
   useEffect(() => {
@@ -134,9 +150,6 @@ export function Layout() {
     setIsPlaying(!isPlaying);
   };
 
-  const toggleTheme = () => {
-    updateSettings({ ...settings, theme: settings.theme === 'dark' ? 'light' : 'dark' });
-  };
 
   const navItems = [
     { path: '/', icon: Home, label: 'Home' },
@@ -152,56 +165,97 @@ export function Layout() {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#1A1C29] flex flex-col font-sans text-gray-900 dark:text-white transition-colors duration-300">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#0B0C10] flex flex-col font-sans text-white transition-colors duration-500 relative overflow-hidden">
+      {academy.appBgVideoUrl ? (
+        <video 
+          className="absolute inset-0 z-0 w-full h-full object-cover pointer-events-none opacity-100"
+          src={academy.appBgVideoUrl} 
+          autoPlay 
+          muted 
+          loop 
+          playsInline
+        />
+      ) : academy.appBgUrl ? (
+        <div 
+          className="absolute inset-0 z-0 pointer-events-none"
+          style={{ 
+            backgroundImage: `url(${academy.appBgUrl})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundAttachment: 'fixed',
+            opacity: 1
+          }}
+        />
+      ) : (
+        <>
+          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-400/20 dark:bg-blue-600/20 blur-[100px] pointer-events-none" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-purple-400/20 dark:bg-purple-600/20 blur-[100px] pointer-events-none" />
+        </>
+      )}
+
       {currentBgm && (
         <audio ref={audioRef} src={currentBgm} onEnded={handleSongEnd} loop={!settings.bgmList || settings.bgmList.length <= 1} />
       )}
       
-      {/* Top Header */}
-      <header className="bg-white/80 dark:bg-[#252836]/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white p-4 sticky top-0 z-10 transition-colors duration-300 relative overflow-hidden">
-        {academy.headerBgUrl && (
-          <div 
-            className="absolute inset-0 z-0 opacity-20 dark:opacity-30 pointer-events-none"
-            style={{ 
-              backgroundImage: `url(${academy.headerBgUrl})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              aspectRatio: academy.headerRatio === '4320x729' ? '4320/729' : academy.headerRatio === '4320x2832' ? '4320/2832' : '4320/1056'
-            }}
-          />
-        )}
+                  {/* Top Header Sticky */}
+      <header className="sticky top-0 z-20 bg-transparent dark:bg-transparent backdrop-blur-md  shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] p-4 transition-colors duration-500 overflow-hidden">
         <div className="max-w-3xl mx-auto flex items-center justify-between relative z-10">
-          <div className="flex items-center gap-3 text-left">
-            {academy.logoUrl ? (
-              <img src={academy.logoUrl} alt="Logo" className="w-10 h-10 rounded-full object-cover shadow-sm bg-white" />
-            ) : (
-              <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center font-black text-white shadow-md">
-                {academy.name.charAt(0) || 'D'}
+          <div className="flex items-center gap-4 text-left">
+            <div className="relative w-12 h-12 rounded-full p-[2px] bg-transparent dark:bg-white/5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] shrink-0">
+              <div className="w-full h-full rounded-full overflow-hidden bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+                {academy.logoUrl ? (
+                  <img src={academy.logoUrl} alt="Logo" className="w-full h-full object-cover" />
+                ) : (
+                  <div className="font-black text-white text-xl">
+                    {academy.name.charAt(0) || "D"}
+                  </div>
+                )}
               </div>
-            )}
+            </div>
             <div className="flex flex-col">
-              <h1 className="font-bold text-lg tracking-tight text-gray-900 dark:text-white leading-tight">{academy.name || 'Dragons Academy'}</h1>
+              <h1 className="font-bold text-xl tracking-wide text-white leading-tight drop-shadow-md">{academy.name || "Dragons Academy"}</h1>
               {academy.subtitle && (
-                <span className="text-[10px] font-medium text-gray-500 dark:text-gray-400">{academy.subtitle}</span>
+                <span className="text-xs font-semibold text-white/90 uppercase tracking-wider drop-shadow-sm">{academy.subtitle}</span>
               )}
             </div>
           </div>
           
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-2">
             {hasBgm && (
-              <button onClick={toggleMusic} className="p-2 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 rounded-full transition-all">
+              <button onClick={toggleMusic} className="p-2.5 text-white/90 hover:text-white rounded-full transition-all shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] border border-white/20 dark:border-white/20 bg-white/10 backdrop-blur-md">
                 {isPlaying ? <Volume2 className="w-5 h-5" /> : <VolumeX className="w-5 h-5" />}
               </button>
             )}
-            <button onClick={toggleTheme} className="p-2 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 rounded-full transition-all">
-              {settings.theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            <button onClick={toggleTheme} className="p-2.5 text-white/90 hover:text-white rounded-full transition-all shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] border border-white/20 dark:border-white/20 bg-white/10 backdrop-blur-md">
+              {settings.theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
           </div>
         </div>
       </header>
 
+      {/* Banner */}
+      <div className="relative w-full z-0 overflow-hidden shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.2)] ">
+        {academy.headerBgUrl ? (
+          <div 
+            className="w-full relative pointer-events-none"
+            style={{ 
+              backgroundImage: `url(${academy.headerBgUrl})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              paddingBottom: academy.headerRatio === "4320x729" ? "16.875%" : academy.headerRatio === "4320x2832" ? "65.555%" : "24.444%"
+            }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-transparent opacity-100" />
+          </div>
+        ) : (
+          <div className="w-full bg-slate-900/50" style={{ paddingBottom: academy.headerRatio === "4320x729" ? "16.875%" : academy.headerRatio === "4320x2832" ? "65.555%" : "24.444%" }} />
+        )}
+      </div>
+
+
+
       {/* Main Content Area */}
-      <main className="flex-1 w-full max-w-3xl mx-auto p-4 flex flex-col pb-24">
+      <main className="flex-1 w-full max-w-3xl mx-auto px-4 -mt-16 flex flex-col pb-24 relative z-10">
         <Outlet />
       </main>
 
@@ -210,7 +264,7 @@ export function Layout() {
         {/* The Menu Box */}
         <div 
           className={cn(
-            "flex flex-col gap-1 bg-white/70 dark:bg-black/70 backdrop-blur-md border border-gray-100 dark:border-gray-800 rounded-2xl shadow-[0_8px_25px_rgba(0,0,0,0.15)] p-1 transition-all duration-500 origin-bottom ease-out max-h-[85vh] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]",
+            "flex flex-col gap-1 bg-transparent dark:bg-transparent backdrop-blur-md border border-white/20 dark:border-white/20 rounded-2xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] p-1 transition-all duration-500 origin-bottom ease-out max-h-[85vh] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]",
             isMenuOpen ? "scale-100 opacity-100 translate-y-0 translate-x-0" : "scale-50 opacity-0 translate-y-12 pointer-events-none"
           )}
         >
@@ -224,11 +278,11 @@ export function Layout() {
                 to={item.path}
                 onClick={() => setIsMenuOpen(false)}
                 className={cn(
-                  "flex flex-col items-center justify-center p-1 rounded-xl transition-all duration-300 w-12 h-12 shrink-0",
-                  isActive ? "bg-blue-600 dark:bg-blue-500 text-white shadow-sm scale-105" : "text-gray-700 dark:text-gray-300 hover:bg-white/80 dark:hover:bg-white/10"
+                  "flex flex-col items-center justify-center p-1 rounded-xl transition-all duration-300 w-12 h-12 shrink-0 relative",
+                  isActive ? "bg-white/5 dark:bg-white/20 text-blue-600 dark:text-blue-400 shadow-[0_4px_12px_rgba(0,0,0,0.1)] border border-white/20 dark:border-white/20 scale-105" : "text-white/90 text-white/70 hover:bg-white/50 dark:hover:bg-white/10"
                 )}
               >
-                <Icon className={cn("w-4 h-4 mb-0.5")} />
+                <Icon className={cn("w-4 h-4 mb-0.5", isActive && "drop-shadow-sm")} />
                 <span className="text-[7px] font-bold tracking-wide text-center leading-tight truncate w-full">{item.label}</span>
               </Link>
             );
@@ -238,12 +292,12 @@ export function Layout() {
         {/* Floating Button */}
         <button 
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="w-12 h-12 bg-gradient-to-br from-[#F26A21] via-[#e55910] to-[#c94500] text-white rounded-full shadow-[0_4px_10px_rgba(242,106,33,0.4),inset_-2px_-2px_4px_rgba(0,0,0,0.3),inset_2px_2px_4px_rgba(255,255,255,0.4)] flex items-center justify-center active:scale-95 transition-all duration-300 z-10 hover:shadow-[0_6px_15px_rgba(242,106,33,0.5),inset_-2px_-2px_4px_rgba(0,0,0,0.3),inset_2px_2px_4px_rgba(255,255,255,0.4)]"
+          className="w-12 h-12 bg-orange-500 text-white rounded-full shadow-[0_4px_15px_rgba(249,115,22,0.6),inset_0_-3px_5px_rgba(0,0,0,0.3),inset_0_3px_5px_rgba(255,255,255,0.5)] flex items-center justify-center active:scale-95 transition-all duration-300 z-10 hover:shadow-[0_6px_20px_rgba(249,115,22,0.8),inset_0_-3px_5px_rgba(0,0,0,0.3),inset_0_3px_5px_rgba(255,255,255,0.5)] border border-orange-400"
         >
-          <div className={cn("transition-transform duration-500 text-white/90", isMenuOpen ? "rotate-90 scale-0 opacity-0 absolute" : "rotate-0 scale-100 opacity-100")}>
+          <div className={cn("transition-transform duration-500", isMenuOpen ? "rotate-90 scale-0 opacity-0 absolute" : "rotate-0 scale-100 opacity-100")}>
             <Dribbble className="w-6 h-6" strokeWidth={1.5} />
           </div>
-          <div className={cn("transition-transform duration-500 text-white", isMenuOpen ? "rotate-0 scale-100 opacity-100" : "-rotate-90 scale-0 opacity-0 absolute")}>
+          <div className={cn("transition-transform duration-500", isMenuOpen ? "rotate-0 scale-100 opacity-100" : "-rotate-90 scale-0 opacity-0 absolute")}>
             <X className="w-6 h-6" strokeWidth={2.5} />
           </div>
         </button>

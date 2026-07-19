@@ -1,8 +1,9 @@
+import { Link } from 'react-router-dom';
 import { useState, useMemo, useRef } from 'react';
 import { useStore } from '../store';
 import { ClassLevel, Student } from '../types';
 import { cn } from './Layout';
-import { Trophy, ChevronLeft, Download, Share2, Search } from 'lucide-react';
+import { ArrowLeft, Trophy, ChevronLeft, Download, Share2, Search } from 'lucide-react';
 import { calculateStudentScore } from '../utils/calculations';
 import { toJpeg } from 'html-to-image';
 
@@ -83,16 +84,16 @@ export function Report() {
       <div className="space-y-6 pb-6 animate-in fade-in slide-in-from-right-4">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
-            <button onClick={() => setSelectedStudent(null)} className="p-2 bg-gray-100 dark:bg-white/5 rounded-full hover:bg-gray-200 dark:bg-white/10">
-              <ChevronLeft className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+            <button onClick={() => setSelectedStudent(null)} className="p-2 bg-transparent/60 dark:bg-slate-200/50 dark:bg-slate-800/50 rounded-full hover:bg-gray-200 dark:bg-slate-300/50 dark:bg-slate-700/50">
+              <ChevronLeft className="w-5 h-5 text-white/90" />
             </button>
-            <h2 className="text-xl font-bold">Rapor Siswa</h2>
+            <h2 className="text-xl font-black text-lime-400 drop-shadow-[0_0_10px_#a3e635] [text-shadow:0_0_10px_#a3e635]">Rapor Siswa</h2>
           </div>
           <div className="flex gap-2">
-            <button onClick={handleShare} className="p-2 bg-white dark:bg-[#1A1C29] border border-gray-200 dark:border-gray-800 rounded-full hover:bg-gray-50 dark:bg-[#151720] shadow-sm text-gray-700 dark:text-gray-300 active:scale-95 transition-all">
+            <button onClick={handleShare} className="p-2 bg-transparent dark:bg-transparent backdrop-blur-md border border-white/20 dark:border-white/20 rounded-full hover:bg-transparent shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] text-white/90 active:scale-95 transition-all">
               <Share2 className="w-5 h-5" />
             </button>
-            <button onClick={handleDownload} disabled={isDownloading} className="px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 shadow-sm font-bold text-sm flex items-center gap-2 active:scale-95 transition-all disabled:opacity-70 disabled:active:scale-100">
+            <button onClick={handleDownload} disabled={isDownloading} className="px-4 py-2 bg-slate-800 dark:bg-slate-200 text-white text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] text-white rounded-full hover:bg-blue-700 shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] font-bold text-sm flex items-center gap-2 active:scale-95 transition-all disabled:opacity-70 disabled:active:scale-100">
               <Download className="w-4 h-4" />
               {isDownloading ? 'Menyiapkan...' : 'Download'}
             </button>
@@ -100,55 +101,55 @@ export function Report() {
         </div>
 
         {/* Report Content to be captured */}
-        <div ref={reportRef} className="space-y-6 p-4 -m-4 bg-gray-50 dark:bg-[#151720] rounded-2xl">
+        <div ref={reportRef} className="space-y-6 p-4 -m-4 bg-transparent rounded-2xl">
           <div className="bg-blue-800 rounded-2xl p-6 text-white text-center shadow-lg relative overflow-hidden">
-            <Trophy className="w-24 h-24 absolute -top-4 -right-4 text-blue-700 dark:text-blue-400 opacity-50" />
-            <div className="w-16 h-16 bg-white dark:bg-[#1A1C29]/20 rounded-full mx-auto mb-3 flex items-center justify-center text-xl font-bold backdrop-blur-sm">
+            <Trophy className="w-24 h-24 absolute -top-4 -right-4 text-white dark:text-blue-400 opacity-50" />
+            <div className="w-16 h-16 bg-transparent dark:bg-transparent backdrop-blur-md/20 rounded-full mx-auto mb-3 flex items-center justify-center text-xl font-bold text-blue-800 dark:text-white backdrop-blur-sm">
               {selectedStudent.name.charAt(0)}
             </div>
             <h3 className="text-xl font-bold">{selectedStudent.name}</h3>
             <p className="text-blue-200 text-sm">{selectedStudent.studentId} • {selectedStudent.classLevel}</p>
-            <div className="inline-block mt-3 px-3 py-1 bg-white dark:bg-[#1A1C29]/20 rounded-full text-xs font-medium border border-white/30 backdrop-blur-sm">
+            <div className="inline-block mt-3 px-3 py-1 bg-transparent dark:bg-transparent backdrop-blur-md/20 rounded-full text-xs font-medium border border-white/20 dark:border-white/20/30 backdrop-blur-sm">
               Periode: {activePeriod?.semester} {activePeriod?.year}
             </div>
           </div>
 
-          <div className="bg-white dark:bg-[#1A1C29] rounded-2xl border border-gray-200 dark:border-gray-800 p-5 shadow-sm space-y-4">
-            <h4 className="font-bold border-b pb-2 text-gray-900 dark:text-white">Nilai 5 Pilar</h4>
+          <div className="bg-transparent dark:bg-transparent backdrop-blur-md rounded-2xl border border-white/20 dark:border-white/20 p-5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] space-y-4">
+            <h4 className="font-bold border-b pb-2 text-white tracking-wide">Nilai 5 Pilar</h4>
             
-            <ScoreRow label="Technical Skill" score={reportData.tVal} weight={settings.weights.technical} />
-            <ScoreRow label="Tactical Understanding" score={reportData.tacVal} weight={settings.weights.tactical} />
-            <ScoreRow label="Physical Development" score={reportData.pVal} weight={settings.weights.physical} />
-            <ScoreRow label="Mental Development" score={reportData.mVal} weight={settings.weights.mental} />
-            <ScoreRow label="Character & Teamwork" score={reportData.cVal} weight={settings.weights.character} />
+            <ScoreRow label="Technical Skill" score={reportData.tVal} weight={settings.weights.technical} colorClass="bg-blue-400 shadow-[0_0_8px_#60a5fa]" />
+            <ScoreRow label="Tactical Understanding" score={reportData.tacVal} weight={settings.weights.tactical} colorClass="bg-emerald-400 shadow-[0_0_8px_#34d399]" />
+            <ScoreRow label="Physical Development" score={reportData.pVal} weight={settings.weights.physical} colorClass="bg-amber-400 shadow-[0_0_8px_#fbbf24]" />
+            <ScoreRow label="Mental Development" score={reportData.mVal} weight={settings.weights.mental} colorClass="bg-fuchsia-400 shadow-[0_0_8px_#e879f9]" />
+            <ScoreRow label="Character & Teamwork" score={reportData.cVal} weight={settings.weights.character} colorClass="bg-rose-400 shadow-[0_0_8px_#fb7185]" />
             
-            <div className="border-t pt-2 flex justify-between font-bold text-gray-800">
+            <div className="border-t pt-2 flex justify-between font-bold text-white">
               <span>Rata-rata 5 Pilar (90%)</span>
               <span>{reportData.pilarScore.toFixed(2)}</span>
             </div>
           </div>
 
-          <div className="bg-white dark:bg-[#1A1C29] rounded-2xl border border-gray-200 dark:border-gray-800 p-5 shadow-sm space-y-4">
-            <h4 className="font-bold border-b pb-2 text-gray-900 dark:text-white">Kehadiran</h4>
+          <div className="bg-transparent dark:bg-transparent backdrop-blur-md rounded-2xl border border-white/20 dark:border-white/20 p-5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] space-y-4">
+            <h4 className="font-bold border-b pb-2 text-white tracking-wide">Kehadiran</h4>
             <div className="grid grid-cols-4 gap-2 text-center mb-3">
-              <div className="bg-green-50 rounded-lg p-2"><div className="text-sm font-bold text-green-700">{reportData.counts.hadir}</div><div className="text-[10px] text-gray-500 dark:text-gray-400">Hadir</div></div>
-              <div className="bg-yellow-50 rounded-lg p-2"><div className="text-sm font-bold text-yellow-700">{reportData.counts.izin}</div><div className="text-[10px] text-gray-500 dark:text-gray-400">Izin</div></div>
-              <div className="bg-blue-50 rounded-lg p-2"><div className="text-sm font-bold text-blue-700">{reportData.counts.sakit}</div><div className="text-[10px] text-gray-500 dark:text-gray-400">Sakit</div></div>
-              <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-2"><div className="text-sm font-bold text-blue-700 dark:text-blue-400">{reportData.counts.alpha}</div><div className="text-[10px] text-gray-500 dark:text-gray-400">Alpha</div></div>
+              <div className="bg-green-400/20 border border-green-400 rounded-lg p-2 shadow-[0_0_8px_rgba(74,222,128,0.3)]"><div className="text-sm font-black text-green-400">{reportData.counts.hadir}</div><div className="text-[10px] text-green-400/80 font-bold uppercase tracking-wide">Hadir</div></div>
+              <div className="bg-yellow-400/20 border border-yellow-400 rounded-lg p-2 shadow-[0_0_8px_rgba(250,204,21,0.3)]"><div className="text-sm font-black text-yellow-400">{reportData.counts.izin}</div><div className="text-[10px] text-yellow-400/80 font-bold uppercase tracking-wide">Izin</div></div>
+              <div className="bg-blue-400/20 border border-blue-400 rounded-lg p-2 shadow-[0_0_8px_rgba(96,165,250,0.3)]"><div className="text-sm font-black text-blue-400">{reportData.counts.sakit}</div><div className="text-[10px] text-blue-400/80 font-bold uppercase tracking-wide">Sakit</div></div>
+              <div className="bg-pink-400/20 border border-pink-400 rounded-lg p-2 shadow-[0_0_8px_rgba(244,114,182,0.3)]"><div className="text-sm font-black text-pink-400">{reportData.counts.alpha}</div><div className="text-[10px] text-pink-400/80 font-bold uppercase tracking-wide">Alpha</div></div>
             </div>
-            <div className="flex justify-between font-bold text-gray-800">
+            <div className="flex justify-between font-bold text-white">
               <span>Nilai Absensi (10%)</span>
               <span>{reportData.attScore.toFixed(2)}</span>
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 text-white shadow-xl flex items-center justify-between">
+          <div className={cn("bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] flex items-center justify-between border-[2px]", reportData.finalScore >= 80 ? "border-green-400 shadow-[0_0_15px_rgba(74,222,128,0.5)]" : reportData.finalScore >= 60 ? "border-yellow-400 shadow-[0_0_15px_rgba(250,204,21,0.5)]" : "border-pink-400 shadow-[0_0_15px_rgba(244,114,182,0.5)]")}>
             <div>
-              <p className="text-gray-500 dark:text-gray-400 text-sm mb-1">NILAI AKHIR</p>
+              <p className="text-white/70 text-sm mb-1">NILAI AKHIR</p>
               <div className="text-4xl font-black">{Math.round(reportData.finalScore)}</div>
             </div>
             <div className="text-right">
-              <p className="text-gray-500 dark:text-gray-400 text-sm mb-1">PREDIKAT</p>
+              <p className="text-white/70 text-sm mb-1">PREDIKAT</p>
               <div className={cn("text-xl font-bold uppercase tracking-wider", 
                 reportData.finalScore >= 80 ? "text-green-400" :
                 reportData.finalScore >= 60 ? "text-yellow-400" : "text-blue-400"
@@ -158,10 +159,10 @@ export function Report() {
             </div>
           </div>
 
-          <div className="bg-white dark:bg-[#1A1C29] rounded-2xl border border-gray-200 dark:border-gray-800 p-5 shadow-sm space-y-4">
-            <h4 className="font-bold border-b pb-2 text-gray-900 dark:text-white text-center">Catatan Pelatih</h4>
-            <div className="bg-gray-50 dark:bg-[#151720] p-4 rounded-xl border border-gray-100 min-h-[100px] text-center flex items-center justify-center">
-              <p className="text-sm text-gray-700 dark:text-gray-300 italic">
+          <div className="bg-transparent dark:bg-transparent backdrop-blur-md rounded-2xl border border-white/20 dark:border-white/20 p-5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] space-y-4">
+            <h4 className="font-bold border-b pb-2 text-white tracking-wide text-center">Catatan Pelatih</h4>
+            <div className="bg-transparent p-4 rounded-xl border border-gray-100 min-h-[100px] text-center flex items-center justify-center">
+              <p className="text-sm text-white/90 italic">
                 {studentEvaluation?.notes?.recommendation 
                   ? `"${studentEvaluation.notes.recommendation}"` 
                   : `"${selectedStudent.name} telah mengikuti program latihan di periode ini. Terus tingkatkan kemampuan teknis dan tetap semangat dalam berlatih!"`}
@@ -172,7 +173,7 @@ export function Report() {
               <div className="text-center relative">
                 <div className="w-24 h-24 absolute -top-8 -left-4 opacity-10 pointer-events-none">
                   {/* Fake stamp SVG */}
-                  <svg viewBox="0 0 100 100" className="w-full h-full text-blue-600 dark:text-blue-500 fill-current">
+                  <svg viewBox="0 0 100 100" className="w-full h-full text-white dark:text-white fill-current">
                     <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="5,2"/>
                     <circle cx="50" cy="50" r="38" fill="none" stroke="currentColor" strokeWidth="1"/>
                     <text x="50" y="42" textAnchor="middle" fontSize="10" fontWeight="bold">BASKETBALL</text>
@@ -182,10 +183,10 @@ export function Report() {
                 </div>
                 <div className="w-24 h-16 border-b-2 border-gray-400 mx-auto mb-2 relative z-10 flex items-end justify-center">
                    {/* Fake signature line */}
-                   <span className="font-['Brush_Script_MT',cursive] text-2xl text-blue-900 opacity-80">Coach</span>
+                   <span className="font-['Brush_Script_MT',cursive] text-xl text-orange-400 drop-shadow-[0_0_8px_#fb923c] whitespace-nowrap leading-none mb-1">{settings?.academy?.headName || "Coach"}</span>
                 </div>
-                <p className="text-sm font-bold text-gray-900 dark:text-white">Kepala Pelatih</p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">Basketball Academy</p>
+                <p className="text-sm font-bold text-white tracking-wide">Kepala Pelatih</p>
+                <p className="text-xs text-white/70">{settings?.academy?.name || 'Basketball Academy'}</p>
               </div>
             </div>
           </div>
@@ -196,22 +197,27 @@ export function Report() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="flex flex-col gap-6">
       <div>
-        <h2 className="text-2xl font-bold mb-1 text-gray-900 dark:text-white">Rapor Siswa</h2>
-        <p className="text-sm text-gray-500 dark:text-gray-400">Pilih siswa untuk melihat rapor</p>
+        <div className="flex items-center gap-3 mb-1">
+          <Link to="/" className="p-2 bg-transparent/60 dark:bg-slate-200/50 dark:bg-slate-800/50 rounded-full border border-white/20 dark:border-white/20 hover:bg-white/20 dark:hover:bg-slate-700/50 transition-colors flex-shrink-0">
+          <ArrowLeft className="w-5 h-5 text-white" />
+        </Link>
+          <h2 className="text-2xl font-black text-lime-400 drop-shadow-[0_0_10px_#a3e635] [text-shadow:0_0_10px_#a3e635]">Rapor Siswa</h2>
+        </div>
+        <p className="text-sm text-white/70">Pilih siswa untuk melihat rapor</p>
       </div>
 
       <div className="relative">
         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-          <Search className="h-5 w-5 text-gray-400" />
+          <Search className="h-5 w-5 text-white/70" />
         </div>
         <input
           type="text"
           placeholder="Cari nama atau ID siswa..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full pl-10 pr-4 py-3 border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#1A1C29] rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm text-gray-900 dark:text-white"
+          className="w-full pl-10 pr-4 py-3 border border-white/20 dark:border-white/20 bg-transparent dark:bg-transparent backdrop-blur-md rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm text-white tracking-wide"
         />
       </div>
 
@@ -220,7 +226,7 @@ export function Report() {
           <button
             key={c}
             onClick={() => setSelectedClass(c as any)}
-            className={cn("px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap border", selectedClass === c ? "bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-400" : "bg-white dark:bg-[#1A1C29] border-gray-200 dark:border-gray-800 text-gray-500 dark:text-gray-400")}
+            className={cn("px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap border", selectedClass === c ? "bg-white/30 dark:bg-white/5 border-blue-200 dark:border-blue-800 text-white dark:text-blue-400" : "bg-transparent dark:bg-transparent backdrop-blur-md border-white/20 dark:border-white/20 text-white/70")}
           >
             {c}
           </button>
@@ -229,30 +235,30 @@ export function Report() {
 
       <div className="space-y-3">
         {rankedStudents.length === 0 ? (
-          <p className="text-center text-gray-500 dark:text-gray-400 text-sm py-10">Belum ada siswa di kelas ini.</p>
+          <p className="text-center text-white/70 text-sm py-10">Belum ada siswa di kelas ini.</p>
         ) : (
           rankedStudents.map((student, idx) => (
             <button
               key={student.id}
               onClick={() => setSelectedStudent(student)}
-              className="w-full bg-white dark:bg-[#1A1C29] p-4 rounded-xl shadow-sm border border-gray-100 flex items-center justify-between hover:border-blue-300 dark:border-blue-700 transition-colors text-left"
+              className="w-full bg-transparent dark:bg-transparent backdrop-blur-md p-4 rounded-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] border border-gray-100 flex items-center justify-between hover:border-blue-300 dark:border-blue-700 transition-colors text-left"
             >
               <div className="flex items-center gap-3">
                 <div className={cn(
                   "w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm",
-                  idx === 0 ? "bg-yellow-100 text-yellow-700" :
-                  idx === 1 ? "bg-gray-200 dark:bg-white/10 text-gray-700 dark:text-gray-300" :
-                  idx === 2 ? "bg-amber-100 text-amber-700" :
-                  "bg-gray-100 dark:bg-white/5 text-gray-500 dark:text-gray-400"
+                  idx === 0 ? "bg-yellow-100 text-white" :
+                  idx === 1 ? "bg-gray-200 dark:bg-slate-300/50 dark:bg-slate-700/50 text-white/90" :
+                  idx === 2 ? "bg-amber-100 text-white" :
+                  "bg-transparent/60 dark:bg-slate-200/50 dark:bg-slate-800/50 text-white/70"
                 )}>
                   #{idx + 1}
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white">{student.name}</h3>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">{student.studentId} • Akhir: {student.stats.finalScore.toFixed(1)}</p>
+                  <h3 className="font-semibold text-white tracking-wide">{student.name}</h3>
+                  <p className="text-xs text-white/70">{student.studentId} • Akhir: {student.stats.finalScore.toFixed(1)}</p>
                 </div>
               </div>
-              <ChevronLeft className="w-5 h-5 text-gray-700 dark:text-gray-300 rotate-180" />
+              <ChevronLeft className="w-5 h-5 text-white/90 rotate-180" />
             </button>
           ))
         )}
@@ -261,16 +267,16 @@ export function Report() {
   );
 }
 
-function ScoreRow({ label, score, weight }: { label: string, score: number, weight: number }) {
+function ScoreRow({ label, score, weight, colorClass }: { label: string, score: number, weight: number, colorClass?: string }) {
   return (
     <div className="flex justify-between items-center text-sm">
       <div className="flex flex-col">
-        <span className="font-medium text-gray-800">{label}</span>
-        <span className="text-[10px] text-gray-500 dark:text-gray-400">Bobot {weight}%</span>
+        <span className="font-medium text-white">{label}</span>
+        <span className="text-[10px] text-white/70">Bobot {weight}%</span>
       </div>
       <div className="flex items-center gap-4">
-        <div className="w-24 h-2 bg-gray-100 dark:bg-white/5 rounded-full overflow-hidden">
-          <div className="h-full bg-blue-50 dark:bg-blue-900/200" style={{ width: `${score}%` }} />
+        <div className="w-24 h-2 bg-transparent/60 dark:bg-slate-200/50 dark:bg-slate-800/50 rounded-full overflow-hidden">
+          <div className={cn("h-full", colorClass || "bg-slate-700 dark:bg-slate-300")} style={{ width: `${score}%` }} />
         </div>
         <span className="font-bold w-8 text-right">{score.toFixed(1)}</span>
       </div>

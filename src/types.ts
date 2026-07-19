@@ -107,6 +107,8 @@ export interface Settings {
     subtitle?: string;
     logoUrl: string;
     headerBgUrl?: string;
+    appBgUrl?: string;
+    appBgVideoUrl?: string;
     headerRatio?: '4320x729' | '4320x1056' | '4320x2832';
     address: string;
     phone: string;

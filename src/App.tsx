@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { Dashboard } from './components/Dashboard';
@@ -16,14 +16,8 @@ import { Coaches } from './components/Coaches';
 import { Material } from './components/Material';
 import { Schedule } from './components/Schedule';
 import { Notifications } from './components/Notifications';
-import { initFirebaseSync } from './lib/firebase';
 
 export default function App() {
-  useEffect(() => {
-    const unsubscribe = initFirebaseSync();
-    return () => unsubscribe();
-  }, []);
-
   return (
     <BrowserRouter>
       <Routes>

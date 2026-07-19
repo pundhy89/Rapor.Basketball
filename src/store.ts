@@ -1,5 +1,20 @@
 import { create } from 'zustand';
+import { persist, StateStorage, createJSONStorage } from 'zustand/middleware';
+import * as idb from 'idb-keyval';
 import { Student, Coach, DailyAssessment, Attendance, PeriodEvaluation, Settings, ScheduleItem } from './types';
+
+// Custom IDB storage for Zustand
+const idbStorage: StateStorage = {
+  getItem: async (name): Promise<string | null> => {
+    return (await idb.get(name)) || null;
+  },
+  setItem: async (name, value): Promise<void> => {
+    await idb.set(name, value);
+  },
+  removeItem: async (name): Promise<void> => {
+    await idb.del(name);
+  },
+};
 
 interface AppState {
   students: Student[];
@@ -39,6 +54,8 @@ const defaultSettings: Settings = {
     subtitle: '',
     logoUrl: '',
     headerBgUrl: '',
+    appBgUrl: '',
+    appBgVideoUrl: '',
     headerRatio: '4320x1056',
     address: '',
     phone: '',
@@ -53,7 +70,9 @@ const defaultSettings: Settings = {
   theme: 'light',
 };
 
-export const useStore = create<AppState>()((set) => ({
+export const useStore = create<AppState>()(
+  persist(
+    (set) => ({
       students: [],
       coaches: [],
       assessments: [],
@@ -121,5 +140,10 @@ export const useStore = create<AppState>()((set) => ({
             bgmList: state.settings?.bgmList || []
           },
         })),
-    })
+    }),
+    {
+      name: 'academy-storage',
+      storage: createJSONStorage(() => idbStorage),
+    }
+  )
 );

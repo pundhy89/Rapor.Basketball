@@ -1,8 +1,9 @@
+import { Link } from 'react-router-dom';
 import React from "react";
 import { useState } from 'react';
 import { useStore } from '../store';
 import { Coach, ClassLevel } from '../types';
-import { Plus, X, Search } from 'lucide-react';
+import { ArrowLeft, Plus, X, Search } from 'lucide-react';
 import { cn } from './Layout';
 import { IdCardModal } from './IdCardModal';
 
@@ -19,19 +20,24 @@ export function Coaches() {
   const filtered = coaches.filter(c => c.name.toLowerCase().includes(search.toLowerCase()));
 
   return (
-    <div className="space-y-4 pb-6">
+    <div className="flex flex-col gap-4 pb-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold">Data Coach</h2>
+        <div className="flex items-center gap-3">
+          <Link to="/" className="p-2 bg-transparent/60 dark:bg-slate-200/50 dark:bg-slate-800/50 rounded-full border border-white/20 dark:border-white/20 hover:bg-white/20 dark:hover:bg-slate-700/50 transition-colors flex-shrink-0">
+            <ArrowLeft className="w-5 h-5 text-white" />
+          </Link>
+          <h2 className="text-2xl font-black text-cyan-400 drop-shadow-[0_0_10px_#22d3ee] [text-shadow:0_0_10px_#22d3ee]">Data Coach</h2>
+        </div>
         <button
           onClick={() => setIsAdding(true)}
-          className="bg-blue-600 text-white px-3 py-1.5 rounded-lg text-sm font-medium flex items-center gap-1"
+          className="bg-slate-800 dark:bg-slate-200 text-white text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] text-white px-3 py-1.5 rounded-lg text-sm font-medium flex items-center gap-1"
         >
           <Plus className="w-4 h-4" /> Tambah
         </button>
       </div>
 
-      <div className="flex gap-2 bg-white dark:bg-[#1A1C29] p-2 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm">
-        <Search className="w-5 h-5 text-gray-500 dark:text-gray-400 ml-1" />
+      <div className="flex gap-2 bg-transparent dark:bg-transparent backdrop-blur-md p-2 rounded-xl border border-white/20 dark:border-white/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)]">
+        <Search className="w-5 h-5 text-white/70 ml-1" />
         <input
           type="text"
           placeholder="Cari nama coach..."
@@ -43,29 +49,29 @@ export function Coaches() {
 
       <div className="space-y-3">
         {filtered.length === 0 ? (
-          <p className="text-center text-gray-500 dark:text-gray-400 text-sm py-10">Belum ada data coach.</p>
+          <p className="text-center text-white/70 text-sm py-10">Belum ada data coach.</p>
         ) : (
           filtered.map(coach => (
             <div 
               key={coach.id} 
               onClick={() => setSelectedCoach(coach)}
-              className="bg-white dark:bg-[#1A1C29] p-4 rounded-xl shadow-sm border border-gray-100 flex items-start gap-4 cursor-pointer hover:border-blue-300 dark:border-blue-700 hover:shadow-md transition-all active:scale-[0.98]"
+              className="bg-transparent dark:bg-transparent backdrop-blur-md p-4 rounded-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] border border-gray-100 flex items-start gap-4 cursor-pointer hover:border-blue-300 dark:border-blue-700 hover:shadow-md transition-all active:scale-[0.98]"
             >
-              <div className="w-12 h-12 bg-gray-100 dark:bg-white/5 rounded-full flex-shrink-0 overflow-hidden border border-gray-200 dark:border-gray-800">
+              <div className="w-12 h-12 bg-transparent/60 dark:bg-slate-200/50 dark:bg-slate-800/50 rounded-full flex-shrink-0 overflow-hidden border border-white/20 dark:border-white/20">
                 {coach.photoUrl ? (
                   <img src={coach.photoUrl} alt={coach.name} className="w-full h-full object-cover" />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-gray-500 dark:text-gray-400 font-bold text-lg">
+                  <div className="w-full h-full flex items-center justify-center text-white/70 font-bold text-lg">
                     {coach.name.charAt(0)}
                   </div>
                 )}
               </div>
               <div className="flex-1">
                 <div className="flex justify-between items-start">
-                  <h3 className="font-semibold text-gray-900 dark:text-white leading-tight">{coach.name}</h3>
+                  <h3 className="font-semibold text-white tracking-wide leading-tight">{coach.name}</h3>
                   <div className={cn("w-2 h-2 rounded-full mt-1.5", coach.isActive ? "bg-green-500" : "bg-gray-300")} />
                 </div>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{coach.coachId} • {coach.phone}</p>
+                <p className="text-xs text-white/70 mt-0.5">{coach.coachId} • {coach.phone}</p>
                 {coach.certification && (
                   <p className="text-[10px] text-purple-600 bg-purple-50 inline-block px-2 py-0.5 rounded-md mt-1 font-medium">
                     {coach.certification}
@@ -73,7 +79,7 @@ export function Coaches() {
                 )}
                 <div className="flex flex-wrap gap-1 mt-2">
                   {coach.activeClasses.map(c => (
-                    <span key={c} className="text-[10px] bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 border border-blue-100 px-1.5 py-0.5 rounded-md font-medium">
+                    <span key={c} className="text-[10px] bg-white/30 dark:bg-white/5 text-white dark:text-blue-400 border border-blue-100 px-1.5 py-0.5 rounded-md font-medium">
                       {c}
                     </span>
                   ))}
@@ -95,7 +101,8 @@ export function Coaches() {
             id: selectedCoach.coachId,
             photoUrl: selectedCoach.photoUrl,
             role: 'Academy Coach',
-            subRole: selectedCoach.certification || 'Certified Coach'
+            subRole: selectedCoach.certification || 'Certified Coach',
+            phone: selectedCoach.phone
           }}
           onClose={() => setSelectedCoach(null)}
         />
@@ -140,36 +147,36 @@ function AddCoachModal({ onClose, onAdd }: { onClose: () => void, onAdd: (c: Coa
 
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-end sm:items-center justify-center">
-      <div className="bg-white dark:bg-[#1A1C29] w-full max-w-md p-6 rounded-t-2xl sm:rounded-2xl max-h-[90vh] overflow-y-auto">
+      <div className="bg-transparent dark:bg-transparent backdrop-blur-md w-full max-w-md p-6 rounded-t-2xl sm:rounded-2xl max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h3 className="text-lg font-bold">Tambah Coach Baru</h3>
-          <button onClick={onClose}><X className="w-6 h-6 text-gray-500 dark:text-gray-400" /></button>
+          <button onClick={onClose}><X className="w-6 h-6 text-white/70" /></button>
         </div>
         
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nama Lengkap</label>
-            <input required type="text" value={name} onChange={e => setName(e.target.value)} className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-2.5 outline-none focus:border-blue-500 text-sm" placeholder="Nama Coach" />
+            <label className="block text-sm font-medium text-white/90 mb-1">Nama Lengkap</label>
+            <input required type="text" value={name} onChange={e => setName(e.target.value)} className="w-full border border-white/20 dark:border-white/20  rounded-lg p-2.5 outline-none focus:border-slate-400 dark:focus:border-slate-500 focus:ring-2 focus:ring-slate-400/20 focus:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] bg-white/50 dark:bg-black/50 backdrop-blur-md text-sm" placeholder="Nama Coach" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">ID Coach</label>
-            <input required type="text" value={coachId} onChange={e => setCoachId(e.target.value)} className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-2.5 outline-none focus:border-blue-500 text-sm bg-gray-50 dark:bg-[#151720]" placeholder="Contoh: C-001" />
+            <label className="block text-sm font-medium text-white/90 mb-1">ID Coach</label>
+            <input required type="text" value={coachId} onChange={e => setCoachId(e.target.value)} className="w-full border border-white/20 dark:border-white/20  rounded-lg p-2.5 outline-none focus:border-slate-400 dark:focus:border-slate-500 focus:ring-2 focus:ring-slate-400/20 focus:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] bg-white/50 dark:bg-black/50 backdrop-blur-md text-sm bg-transparent" placeholder="Contoh: C-001" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nomor HP</label>
-            <input type="text" value={phone} onChange={e => setPhone(e.target.value)} className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-2.5 outline-none focus:border-blue-500 text-sm" placeholder="08..." />
+            <label className="block text-sm font-medium text-white/90 mb-1">Nomor HP</label>
+            <input type="text" value={phone} onChange={e => setPhone(e.target.value)} className="w-full border border-white/20 dark:border-white/20  rounded-lg p-2.5 outline-none focus:border-slate-400 dark:focus:border-slate-500 focus:ring-2 focus:ring-slate-400/20 focus:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] bg-white/50 dark:bg-black/50 backdrop-blur-md text-sm" placeholder="08..." />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Sertifikasi</label>
-            <input type="text" value={certification} onChange={e => setCertification(e.target.value)} className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-2.5 outline-none focus:border-blue-500 text-sm" placeholder="Contoh: Lisensi C" />
+            <label className="block text-sm font-medium text-white/90 mb-1">Sertifikasi</label>
+            <input type="text" value={certification} onChange={e => setCertification(e.target.value)} className="w-full border border-white/20 dark:border-white/20  rounded-lg p-2.5 outline-none focus:border-slate-400 dark:focus:border-slate-500 focus:ring-2 focus:ring-slate-400/20 focus:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] bg-white/50 dark:bg-black/50 backdrop-blur-md text-sm" placeholder="Contoh: Lisensi C" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Foto Profil</label>
+            <label className="block text-sm font-medium text-white/90 mb-1">Foto Profil</label>
             <div className="flex items-center gap-3">
               {photoUrl ? (
-                <img src={photoUrl} alt="Preview" className="h-12 w-12 object-cover rounded-full bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-gray-800" />
+                <img src={photoUrl} alt="Preview" className="h-12 w-12 object-cover rounded-full bg-transparent/60 dark:bg-slate-200/50 dark:bg-slate-800/50 border border-white/20 dark:border-white/20" />
               ) : (
-                <div className="h-12 w-12 bg-gray-100 dark:bg-white/5 rounded-full flex items-center justify-center text-xs text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-gray-800">Foto</div>
+                <div className="h-12 w-12 bg-transparent/60 dark:bg-slate-200/50 dark:bg-slate-800/50 rounded-full flex items-center justify-center text-xs text-white/70 border border-white/20 dark:border-white/20">Foto</div>
               )}
               <div className="flex-1 space-y-2">
                 <input type="file" accept="image/*" onChange={(e) => {
@@ -179,13 +186,13 @@ function AddCoachModal({ onClose, onAdd }: { onClose: () => void, onAdd: (c: Coa
                     reader.onload = (event) => setPhotoUrl(event.target?.result as string);
                     reader.readAsDataURL(file);
                   }
-                }} className="text-xs text-gray-500 dark:text-gray-400 file:mr-2 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-blue-50 dark:bg-blue-900/20 file:text-blue-700 dark:text-blue-400 hover:file:bg-blue-100 dark:bg-blue-900/40 w-full" />
-                <input type="url" value={photoUrl} onChange={e => setPhotoUrl(e.target.value)} className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-2 outline-none focus:border-blue-500 text-xs" placeholder="Atau paste URL gambar..." />
+                }} className="text-xs text-white/70 file:mr-2 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-white/30 dark:bg-white/5 file:text-white dark:text-blue-400 hover:file:bg-blue-100 dark:bg-blue-900/40 w-full" />
+                <input type="url" value={photoUrl} onChange={e => setPhotoUrl(e.target.value)} className="w-full border border-white/20 dark:border-white/20  rounded-lg p-2 outline-none focus:border-slate-400 dark:focus:border-slate-500 focus:ring-2 focus:ring-slate-400/20 focus:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] bg-white/50 dark:bg-black/50 backdrop-blur-md text-xs" placeholder="Atau paste URL gambar..." />
               </div>
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Kelas yang Dilatih</label>
+            <label className="block text-sm font-medium text-white/90 mb-2">Kelas yang Dilatih</label>
             <div className="flex flex-wrap gap-2">
               {CLASSES.map(c => (
                 <button
@@ -194,7 +201,7 @@ function AddCoachModal({ onClose, onAdd }: { onClose: () => void, onAdd: (c: Coa
                   onClick={() => toggleClass(c)}
                   className={cn(
                     "px-3 py-1.5 rounded-lg text-xs font-semibold border transition-colors",
-                    activeClasses.includes(c) ? "bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-400" : "bg-white dark:bg-[#1A1C29] border-gray-300 dark:border-gray-700 text-gray-500 dark:text-gray-400"
+                    activeClasses.includes(c) ? "bg-white/30 dark:bg-white/5 border-blue-200 dark:border-blue-800 text-white dark:text-blue-400" : "bg-transparent dark:bg-transparent backdrop-blur-md border-white/20 dark:border-white/20  text-white/70"
                   )}
                 >
                   {c}
@@ -203,7 +210,7 @@ function AddCoachModal({ onClose, onAdd }: { onClose: () => void, onAdd: (c: Coa
             </div>
           </div>
           <div className="pt-4">
-            <button type="submit" className="w-full bg-blue-600 text-white font-bold py-3 rounded-xl active:bg-blue-700 transition-colors">
+            <button type="submit" className="w-full bg-slate-800 dark:bg-slate-200 text-white text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] text-white font-bold py-3 rounded-xl active:bg-blue-700 transition-colors">
               Simpan Data Coach
             </button>
           </div>

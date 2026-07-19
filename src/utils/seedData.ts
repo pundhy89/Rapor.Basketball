@@ -32,7 +32,7 @@ export function generateSeedData(activePeriodId: string) {
     
     students.push({
       id: studentId,
-      studentId: `DA-2026-${String(i+1).padStart(3, '0')}`,
+      studentId: `DBA-${String(i+1).padStart(3, '0')}`,
       jerseyNumber: String(Math.floor(Math.random() * 99) + 1),
       name: NAMES[i],
       classLevel: classLevel,

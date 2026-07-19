@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useStore } from '../store';
 import { Download, Save, Plus, Trash2, Database, AlertTriangle, CheckCircle, CloudUpload, CloudDownload, ArrowLeft } from 'lucide-react';
 import { useState, useEffect } from 'react';
@@ -116,70 +117,67 @@ export function Settings() {
   return (
     <div className="space-y-6 pb-6 relative">
       <div className="flex items-center gap-3">
-        <button 
-          onClick={() => navigate(-1)} 
-          className="p-2 bg-gray-100 dark:bg-white/5 rounded-full hover:bg-gray-200 dark:hover:bg-white/10 transition-colors"
-        >
-          <ArrowLeft className="w-5 h-5 text-gray-700 dark:text-gray-300" />
-        </button>
-        <h2 className="text-xl font-bold">Pengaturan</h2>
+        <Link to="/" className="p-2 bg-transparent/60 dark:bg-slate-200/50 dark:bg-slate-800/50 rounded-full border border-white/20 dark:border-white/20 hover:bg-white/20 dark:hover:bg-slate-700/50 transition-colors flex-shrink-0">
+          <ArrowLeft className="w-5 h-5 text-white" />
+        </Link>
+        <h2 className="text-2xl font-black text-purple-400 drop-shadow-[0_0_10px_#c084fc] [text-shadow:0_0_10px_#c084fc]">Pengaturan</h2>
       </div>
 
       {/* Academy Settings */}
-      <div className="bg-white dark:bg-[#1A1C29] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm space-y-4">
+      <div className="bg-transparent dark:bg-transparent backdrop-blur-md p-5 rounded-2xl border border-white/20 dark:border-white/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] space-y-4">
         <h3 className="font-bold border-b pb-2">Profil Academy</h3>
         <div className="space-y-3">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Judul / Nama Academy</label>
+            <label className="block text-sm font-medium text-white/90 mb-1">Judul / Nama Academy</label>
             <input 
               type="text" 
               value={localSettings.academy.name}
               onChange={e => setLocalSettings({...localSettings, academy: {...localSettings.academy, name: e.target.value}})}
-              className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-2.5 outline-none focus:border-blue-500 text-sm"
+              className="w-full border border-white/20 dark:border-white/20  rounded-lg p-2.5 outline-none focus:border-slate-400 dark:focus:border-slate-500 focus:ring-2 focus:ring-slate-400/20 focus:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] bg-white/50 dark:bg-black/50 backdrop-blur-md text-sm"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Sub Judul</label>
+            <label className="block text-sm font-medium text-white/90 mb-1">Sub Judul</label>
             <input 
               type="text" 
               value={localSettings.academy.subtitle || ''}
               onChange={e => setLocalSettings({...localSettings, academy: {...localSettings.academy, subtitle: e.target.value}})}
-              className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-2.5 outline-none focus:border-blue-500 text-xs"
+              className="w-full border border-white/20 dark:border-white/20  rounded-lg p-2.5 outline-none focus:border-slate-400 dark:focus:border-slate-500 focus:ring-2 focus:ring-slate-400/20 focus:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] bg-white/50 dark:bg-black/50 backdrop-blur-md text-xs"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nama Kepala Academy</label>
+            <label className="block text-sm font-medium text-white/90 mb-1">Nama Kepala Academy</label>
             <input 
               type="text" 
               value={localSettings.academy.headName}
               onChange={e => setLocalSettings({...localSettings, academy: {...localSettings.academy, headName: e.target.value}})}
-              className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-2.5 outline-none focus:border-blue-500 text-sm"
+              className="w-full border border-white/20 dark:border-white/20  rounded-lg p-2.5 outline-none focus:border-slate-400 dark:focus:border-slate-500 focus:ring-2 focus:ring-slate-400/20 focus:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] bg-white/50 dark:bg-black/50 backdrop-blur-md text-sm"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nomor Kontak</label>
+            <label className="block text-sm font-medium text-white/90 mb-1">Nomor Kontak</label>
             <input 
               type="text" 
               value={localSettings.academy.phone}
               onChange={e => setLocalSettings({...localSettings, academy: {...localSettings.academy, phone: e.target.value}})}
-              className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-2.5 outline-none focus:border-blue-500 text-sm"
+              className="w-full border border-white/20 dark:border-white/20  rounded-lg p-2.5 outline-none focus:border-slate-400 dark:focus:border-slate-500 focus:ring-2 focus:ring-slate-400/20 focus:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] bg-white/50 dark:bg-black/50 backdrop-blur-md text-sm"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Alamat</label>
+            <label className="block text-sm font-medium text-white/90 mb-1">Alamat</label>
             <textarea 
               value={localSettings.academy.address}
               onChange={e => setLocalSettings({...localSettings, academy: {...localSettings.academy, address: e.target.value}})}
-              className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-2.5 outline-none focus:border-blue-500 text-sm h-20 resize-none"
+              className="w-full border border-white/20 dark:border-white/20  rounded-lg p-2.5 outline-none focus:border-slate-400 dark:focus:border-slate-500 focus:ring-2 focus:ring-slate-400/20 focus:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] bg-white/50 dark:bg-black/50 backdrop-blur-md text-sm h-20 resize-none"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Logo Academy</label>
+            <label className="block text-sm font-medium text-white/90 mb-1">Logo Academy</label>
             <div className="flex items-center gap-4">
               {localSettings.academy.logoUrl ? (
-                <img src={localSettings.academy.logoUrl} alt="Logo" className="h-16 w-16 object-contain rounded-lg border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-[#151720]" />
+                <img src={localSettings.academy.logoUrl} alt="Logo" className="h-16 w-16 object-contain rounded-lg border border-white/20 dark:border-white/20 bg-transparent" />
               ) : (
-                <div className="h-16 w-16 bg-gray-100 dark:bg-white/5 rounded-lg border border-gray-200 dark:border-gray-800 flex items-center justify-center text-xs text-gray-500 dark:text-gray-400">Kosong</div>
+                <div className="h-16 w-16 bg-transparent/60 dark:bg-slate-200/50 dark:bg-slate-800/50 rounded-lg border border-white/20 dark:border-white/20 flex items-center justify-center text-xs text-white/70">Kosong</div>
               )}
               <input 
                 type="file" 
@@ -200,23 +198,24 @@ export function Settings() {
                     }
                   }
                 }}
-                className="flex-1 text-sm text-gray-500 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 dark:bg-blue-900/20 file:text-blue-700 dark:text-blue-400 hover:file:bg-blue-100 dark:bg-blue-900/40"
+                className="flex-1 text-sm text-white/70 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-white/30 dark:bg-white/5 file:text-white dark:text-blue-400 hover:file:bg-blue-100 dark:bg-blue-900/40"
               />
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Background Header</label>
+            <label className="block text-sm font-medium text-white/90 mb-1">Background Header</label>
             <div className="flex flex-col gap-2">
+              <label className="text-xs font-bold text-white/90">Background Header (Opsional)</label>
               <input 
                 type="text" 
                 placeholder="URL Gambar Background (Opsional)"
                 value={localSettings.academy.headerBgUrl || ''}
                 onChange={e => setLocalSettings({...localSettings, academy: {...localSettings.academy, headerBgUrl: e.target.value}})}
-                className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-2.5 outline-none focus:border-blue-500 text-sm"
+                className="w-full border border-white/20 dark:border-white/20  rounded-lg p-2.5 outline-none focus:border-slate-400 dark:focus:border-slate-500 focus:ring-2 focus:ring-slate-400/20 focus:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] bg-white/50 dark:bg-black/50 backdrop-blur-md text-sm"
               />
               <div className="flex items-center gap-4 mt-1">
                 {localSettings.academy.headerBgUrl ? (
-                  <img src={localSettings.academy.headerBgUrl} alt="Header BG" className="h-12 object-cover rounded border border-gray-200 dark:border-gray-800" />
+                  <img src={localSettings.academy.headerBgUrl} alt="Header BG" className="h-12 object-cover rounded border border-white/20 dark:border-white/20" />
                 ) : null}
                 <input 
                   type="file" 
@@ -237,17 +236,59 @@ export function Settings() {
                       }
                     }
                   }}
-                  className="flex-1 text-sm text-gray-500 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-blue-50 dark:bg-blue-900/20 file:text-blue-700 dark:text-blue-400 hover:file:bg-blue-100 dark:bg-blue-900/40"
+                  className="flex-1 text-sm text-white/70 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-white/30 dark:bg-white/5 file:text-white dark:text-blue-400 hover:file:bg-white/50 dark:bg-white/5"
                 />
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-2 mt-4">
+              <label className="text-xs font-bold text-white/90">Background Utama App (Opsional)</label>
+              <input 
+                type="text" 
+                placeholder="URL Gambar Background Utama (Opsional)"
+                value={localSettings.academy.appBgUrl || ''}
+                onChange={e => setLocalSettings({...localSettings, academy: {...localSettings.academy, appBgUrl: e.target.value}})}
+                className="w-full border border-white/20 dark:border-white/20 rounded-lg p-2.5 outline-none focus:border-slate-400 dark:focus:border-slate-500 bg-white/50 dark:bg-black/50 backdrop-blur-md text-sm mb-2"
+              />
+              <div className="flex flex-wrap items-center gap-4 mt-1">
+                {localSettings.academy.appBgUrl ? (
+                  <img src={localSettings.academy.appBgUrl} alt="App BG" className="h-12 object-cover rounded border border-white/20 dark:border-white/20" />
+                ) : null}
+                
+                <div className="flex flex-col gap-2">
+                  <label className="text-xs font-semibold">Upload Gambar (JPG/PNG)</label>
+                  <input 
+                    type="file" 
+                    accept="image/*"
+                    onChange={async (e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        try {
+                          const { compressImage } = await import('../utils/imageCompressor');
+                          const compressed = await compressImage(file, 2000, 2000); 
+                          setLocalSettings({...localSettings, academy: {...localSettings.academy, appBgUrl: compressed, appBgVideoUrl: ''}});
+                        } catch (err) {
+                          const reader = new FileReader();
+                          reader.onload = (event) => {
+                            setLocalSettings({...localSettings, academy: {...localSettings.academy, appBgUrl: event.target?.result as string, appBgVideoUrl: ''}});
+                          };
+                          reader.readAsDataURL(file);
+                        }
+                      }
+                    }}
+                    className="text-xs file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                  />
+                  
+                </div>
               </div>
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Rasio Header</label>
+            <label className="block text-sm font-medium text-white/90 mb-1">Rasio Header</label>
             <select
               value={localSettings.academy.headerRatio || '4320x1056'}
               onChange={e => setLocalSettings({...localSettings, academy: {...localSettings.academy, headerRatio: e.target.value as any}})}
-              className="w-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#1A1C29] rounded-lg p-2.5 outline-none focus:border-blue-500 text-sm"
+              className="w-full border border-white/20 dark:border-white/20  bg-transparent dark:bg-transparent backdrop-blur-md rounded-lg p-2.5 outline-none focus:border-slate-400 dark:focus:border-slate-500 focus:ring-2 focus:ring-slate-400/20 focus:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] bg-white/50 dark:bg-black/50 backdrop-blur-md text-sm"
             >
               <option value="4320x729">4320 x 729</option>
               <option value="4320x1056">4320 x 1056</option>
@@ -256,14 +297,14 @@ export function Settings() {
           </div>
           <div>
             <div className="flex justify-between items-center mb-1">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Background Music (BGM)</label>
+              <label className="block text-sm font-medium text-white/90">Background Music (BGM)</label>
               <label className="flex items-center gap-2 cursor-pointer">
-                <span className="text-xs text-gray-500 font-medium">Suara Klik UI</span>
+                <span className="text-xs text-white/70 font-medium">Suara Klik UI</span>
                 <input 
                   type="checkbox"
                   checked={localSettings.clickSoundEnabled || false}
                   onChange={(e) => setLocalSettings({...localSettings, clickSoundEnabled: e.target.checked})}
-                  className="rounded text-blue-600 w-4 h-4"
+                  className="rounded text-white w-4 h-4"
                 />
               </label>
             </div>
@@ -290,12 +331,12 @@ export function Settings() {
                     });
                   }
                 }}
-                className="w-full text-sm text-gray-500 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 dark:bg-blue-900/20 file:text-blue-700 dark:text-blue-400 hover:file:bg-blue-100 dark:bg-blue-900/40"
+                className="w-full text-sm text-white/70 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-white/30 dark:bg-white/5 file:text-white dark:text-blue-400 hover:file:bg-blue-100 dark:bg-blue-900/40"
               />
               <div className="space-y-2 mt-2">
                 {(localSettings.bgmList || []).map((bgm, index) => (
-                  <div key={bgm.id} className="flex items-center justify-between bg-gray-50 dark:bg-[#151720] p-2 rounded-lg border border-gray-200 dark:border-gray-800">
-                    <span className="text-xs text-gray-700 dark:text-gray-300 font-medium truncate w-3/4">{index + 1}. {bgm.name}</span>
+                  <div key={bgm.id} className="flex items-center justify-between bg-transparent p-2 rounded-lg border border-white/20 dark:border-white/20">
+                    <span className="text-xs text-white/90 font-medium truncate w-3/4">{index + 1}. {bgm.name}</span>
                     <button 
                       onClick={() => {
                         const newList = (localSettings.bgmList || []).filter(item => item.id !== bgm.id);
@@ -308,7 +349,7 @@ export function Settings() {
                   </div>
                 ))}
                 {(localSettings.bgmList || []).length > 1 && (
-                  <p className="text-[10px] text-gray-500 italic mt-1">* BGM akan diputar secara acak</p>
+                  <p className="text-[10px] text-white/70 italic mt-1">* BGM akan diputar secara acak</p>
                 )}
               </div>
             </div>
@@ -317,62 +358,62 @@ export function Settings() {
       </div>
 
       {/* Evaluation Periods */}
-      <div className="bg-white dark:bg-[#1A1C29] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm space-y-4">
+      <div className="bg-transparent dark:bg-transparent backdrop-blur-md p-5 rounded-2xl border border-white/20 dark:border-white/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] space-y-4">
         <div className="flex items-center justify-between border-b pb-2">
           <h3 className="font-bold">Periode Evaluasi</h3>
-          <button onClick={handleAddPeriod} className="text-blue-600 dark:text-blue-500 flex items-center gap-1 text-sm font-semibold hover:bg-blue-50 dark:bg-blue-900/20 px-2 py-1 rounded-lg">
+          <button onClick={handleAddPeriod} className="text-white dark:text-white flex items-center gap-1 text-sm font-semibold hover:bg-white/30 dark:bg-white/5 px-2 py-1 rounded-lg">
             <Plus className="w-4 h-4" /> Tambah
           </button>
         </div>
         
         <div className="space-y-4">
           {localSettings.periods.map((period) => (
-            <div key={period.id} className={cn("p-4 rounded-xl border relative", localSettings.activePeriodId === period.id ? "bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800" : "bg-gray-50 dark:bg-[#151720] border-gray-200 dark:border-gray-800")}>
+            <div key={period.id} className={cn("p-4 rounded-xl border relative", localSettings.activePeriodId === period.id ? "bg-white/30 dark:bg-white/5 border-blue-200 dark:border-blue-800" : "bg-transparent border-white/20 dark:border-white/20")}>
               <div className="grid grid-cols-2 gap-3 mb-3">
                 <div>
-                  <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Semester</label>
-                  <input type="text" value={period.semester} onChange={(e) => handleUpdatePeriod(period.id, 'semester', e.target.value)} className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-2 text-sm outline-none focus:border-blue-500 bg-white dark:bg-[#1A1C29]" placeholder="Contoh: Ganjil" />
+                  <label className="block text-xs font-medium text-white/70 mb-1">Semester</label>
+                  <input type="text" value={period.semester} onChange={(e) => handleUpdatePeriod(period.id, 'semester', e.target.value)} className="w-full border border-white/20 dark:border-white/20  rounded-lg p-2 text-sm outline-none focus:border-slate-400 dark:focus:border-slate-500 focus:ring-2 focus:ring-slate-400/20 focus:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] bg-white/50 dark:bg-black/50 backdrop-blur-md bg-transparent dark:bg-transparent backdrop-blur-md" placeholder="Contoh: Ganjil" />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Tahun</label>
-                  <input type="text" value={period.year} onChange={(e) => handleUpdatePeriod(period.id, 'year', e.target.value)} className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-2 text-sm outline-none focus:border-blue-500 bg-white dark:bg-[#1A1C29]" placeholder="2026" />
+                  <label className="block text-xs font-medium text-white/70 mb-1">Tahun</label>
+                  <input type="text" value={period.year} onChange={(e) => handleUpdatePeriod(period.id, 'year', e.target.value)} className="w-full border border-white/20 dark:border-white/20  rounded-lg p-2 text-sm outline-none focus:border-slate-400 dark:focus:border-slate-500 focus:ring-2 focus:ring-slate-400/20 focus:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] bg-white/50 dark:bg-black/50 backdrop-blur-md bg-transparent dark:bg-transparent backdrop-blur-md" placeholder="2026" />
                 </div>
               </div>
               <div>
-                <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Bulan</label>
-                <input type="text" value={period.month} onChange={(e) => handleUpdatePeriod(period.id, 'month', e.target.value)} className="w-full border border-gray-300 dark:border-gray-700 rounded-lg p-2 text-sm outline-none focus:border-blue-500 bg-white dark:bg-[#1A1C29]" placeholder="Contoh: Januari - Juni" />
+                <label className="block text-xs font-medium text-white/70 mb-1">Bulan</label>
+                <input type="text" value={period.month} onChange={(e) => handleUpdatePeriod(period.id, 'month', e.target.value)} className="w-full border border-white/20 dark:border-white/20  rounded-lg p-2 text-sm outline-none focus:border-slate-400 dark:focus:border-slate-500 focus:ring-2 focus:ring-slate-400/20 focus:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] bg-white/50 dark:bg-black/50 backdrop-blur-md bg-transparent dark:bg-transparent backdrop-blur-md" placeholder="Contoh: Januari - Juni" />
               </div>
               
-              <div className="flex justify-between items-center mt-3 pt-3 border-t border-gray-200 dark:border-gray-800">
+              <div className="flex justify-between items-center mt-3 pt-3 border-t border-white/20 dark:border-white/20">
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input 
                     type="radio" 
                     name="activePeriod" 
                     checked={localSettings.activePeriodId === period.id} 
                     onChange={() => setLocalSettings({...localSettings, activePeriodId: period.id})}
-                    className="text-blue-600 dark:text-blue-500 focus:ring-blue-500"
+                    className="text-white dark:text-white focus:ring-blue-500"
                   />
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Set sebagai aktif</span>
+                  <span className="text-sm font-medium text-white/90">Set sebagai aktif</span>
                 </label>
-                <button onClick={() => handleRemovePeriod(period.id)} className="text-gray-500 dark:text-gray-400 hover:text-blue-500 p-1">
+                <button onClick={() => handleRemovePeriod(period.id)} className="text-white/70 hover:text-white p-1">
                   <Trash2 className="w-4 h-4" />
                 </button>
               </div>
             </div>
           ))}
           {localSettings.periods.length === 0 && (
-            <p className="text-sm text-center text-gray-500 dark:text-gray-400 py-2">Belum ada periode. Silakan tambah.</p>
+            <p className="text-sm text-center text-white/70 py-2">Belum ada periode. Silakan tambah.</p>
           )}
         </div>
       </div>
 
-      <div className="bg-white dark:bg-[#1A1C29] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm space-y-4">
+      <div className="bg-transparent dark:bg-transparent backdrop-blur-md p-5 rounded-2xl border border-white/20 dark:border-white/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] space-y-4">
         <h3 className="font-bold border-b pb-2">Bobot Penilaian (%)</h3>
         
         <div className="space-y-3">
           {(Object.keys(localSettings.weights) as Array<keyof typeof localSettings.weights>).map(key => (
             <div key={key} className="flex justify-between items-center">
-              <label className="text-sm font-medium capitalize text-gray-700 dark:text-gray-300">{key}</label>
+              <label className="text-sm font-medium capitalize text-white/90">{key}</label>
               <input 
                 type="number" 
                 value={localSettings.weights[key]}
@@ -380,61 +421,61 @@ export function Settings() {
                   ...localSettings, 
                   weights: { ...localSettings.weights, [key]: Number(e.target.value) }
                 })}
-                className="w-20 border border-gray-300 dark:border-gray-700 rounded-lg p-2 text-center text-sm outline-none focus:border-blue-500"
+                className="w-20 border border-white/20 dark:border-white/20  rounded-lg p-2 text-center text-sm outline-none focus:border-slate-400 dark:focus:border-slate-500 focus:ring-2 focus:ring-slate-400/20 focus:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] bg-white/50 dark:bg-black/50 backdrop-blur-md"
               />
             </div>
           ))}
         </div>
 
-        <button onClick={handleSave} className="w-full bg-blue-600 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 mt-4 active:bg-blue-700">
+        <button onClick={handleSave} className="w-full bg-slate-800 dark:bg-slate-200 text-white text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 mt-4 active:bg-blue-700">
           <Save className="w-5 h-5" /> Simpan Pengaturan
         </button>
       </div>
 
-      <div className="bg-white dark:bg-[#1A1C29] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm space-y-4">
+      <div className="bg-transparent dark:bg-transparent backdrop-blur-md p-5 rounded-2xl border border-white/20 dark:border-white/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] space-y-4">
         <h3 className="font-bold border-b pb-2">Admin & Database</h3>
         
         <div className="space-y-3">
-          <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-100 dark:border-blue-800/50">
+          <div className="p-4 bg-white/30 dark:bg-white/5 rounded-xl border border-blue-100 dark:border-blue-800/50">
             <div className="flex items-center justify-between mb-3">
               <div>
                 <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-1">Google Drive Sync</h4>
-                <p className="text-xs text-blue-700 dark:text-blue-300">Backup dan restore data ke akun Google Drive Anda.</p>
+                <p className="text-xs text-white dark:text-blue-300">Backup dan restore data ke akun Google Drive Anda.</p>
               </div>
               {syncStatus && (
-                <span className="text-xs font-medium text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/50 px-2 py-1 rounded-full animate-pulse">{syncStatus}</span>
+                <span className="text-xs font-medium text-white bg-blue-100 dark:bg-blue-900/50 px-2 py-1 rounded-full animate-pulse">{syncStatus}</span>
               )}
             </div>
             <div className="grid grid-cols-2 gap-3">
-              <button onClick={handleBackupToDrive} className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 text-sm transition-colors">
+              <button onClick={handleBackupToDrive} className="w-full bg-slate-800 dark:bg-slate-200 hover:bg-slate-700 dark:hover:bg-slate-300 text-white text-white font-bold shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] text-white font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 text-sm transition-colors">
                 <CloudUpload className="w-4 h-4" /> Backup ke Drive
               </button>
-              <button onClick={handleRestoreFromDrive} className="w-full bg-white hover:bg-gray-50 text-blue-700 font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 text-sm border border-blue-200 transition-colors">
+              <button onClick={handleRestoreFromDrive} className="w-full bg-white/50 dark:bg-white/5 hover:bg-transparent text-white font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 text-sm border border-blue-200 transition-colors">
                 <CloudDownload className="w-4 h-4" /> Restore dari Drive
               </button>
             </div>
           </div>
 
-          <div className="p-4 bg-emerald-50 rounded-xl border border-emerald-100">
-            <h4 className="font-semibold text-emerald-900 mb-1">Export Data</h4>
-            <p className="text-xs text-emerald-700 mb-3">Download semua data rapor siswa dalam format Spreadsheet (CSV).</p>
+          <div className="p-4 bg-white/10 dark:bg-white/5 backdrop-blur-md rounded-xl border border-white/20 dark:border-white/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)]">
+            <h4 className="font-bold text-white mb-1">Export Data</h4>
+            <p className="text-xs text-white mb-3">Download semua data rapor siswa dalam format Spreadsheet (CSV).</p>
             <button onClick={handleDownloadCSV} className="w-full bg-emerald-600 text-white font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 active:bg-emerald-700 text-sm transition-colors">
               <Download className="w-4 h-4" /> Download Database CSV
             </button>
           </div>
 
-          <div className="p-4 bg-purple-50 rounded-xl border border-purple-100">
-            <h4 className="font-semibold text-purple-900 mb-1">Simulasi Data (Testing)</h4>
-            <p className="text-xs text-purple-700 mb-3">Generate 20 siswa, 4 coach, dan histori nilai acak untuk melihat cara kerja sistem ranking.</p>
+          <div className="p-4 bg-white/10 dark:bg-white/5 backdrop-blur-md rounded-xl border border-white/20 dark:border-white/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)]">
+            <h4 className="font-bold text-white mb-1">Simulasi Data (Testing)</h4>
+            <p className="text-xs text-white mb-3">Generate 20 siswa, 4 coach, dan histori nilai acak untuk melihat cara kerja sistem ranking.</p>
             <button onClick={handleSimulateData} className="w-full bg-purple-600 text-white font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 active:bg-purple-700 text-sm transition-colors">
               <Database className="w-4 h-4" /> Generate Dummy Data
             </button>
           </div>
 
-          <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-100">
-            <h4 className="font-semibold text-blue-900 mb-1">Reset Database</h4>
-            <p className="text-xs text-blue-700 dark:text-blue-400 mb-3">Hapus permanen semua data siswa, nilai, absen, coach, dan evaluasi. Hati-hati!</p>
-            <button onClick={handleResetData} className="w-full bg-blue-600 text-white font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 active:bg-blue-700 text-sm transition-colors">
+          <div className="p-4 bg-white/10 dark:bg-white/5 backdrop-blur-md rounded-xl border border-white/20 dark:border-white/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)]">
+            <h4 className="font-bold text-white mb-1">Reset Database</h4>
+            <p className="text-xs text-white mb-3">Hapus permanen semua data siswa, nilai, absen, coach, dan evaluasi. Hati-hati!</p>
+            <button onClick={handleResetData} className="w-full bg-slate-800 dark:bg-slate-200 text-white text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] text-white font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 active:bg-blue-700 text-sm transition-colors">
               <AlertTriangle className="w-4 h-4" /> Reset Semua Data
             </button>
           </div>
@@ -442,7 +483,7 @@ export function Settings() {
       </div>
 
       {showSaveSuccess && (
-        <div className="fixed top-20 left-1/2 -translate-x-1/2 bg-gray-900 text-white px-4 py-3 rounded-full flex items-center gap-2 shadow-xl animate-in fade-in slide-in-from-top-4 z-50">
+        <div className="fixed top-20 left-1/2 -translate-x-1/2 bg-white/50 dark:bg-black/50 backdrop-blur-md text-white px-4 py-3 rounded-full flex items-center gap-2 shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_0_rgba(0,0,0,0.2)] animate-in fade-in slide-in-from-top-4 z-50">
           <CheckCircle className="w-5 h-5 text-green-400" />
           <span className="text-sm font-medium">Aksi berhasil dilakukan</span>
         </div>
