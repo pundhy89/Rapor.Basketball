@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Users, Star, FileText, UserSquare, ChevronRight, BookOpen, CalendarDays, Bell, Trophy } from 'lucide-react';
+import {  Users, Star, FileText, UserSquare, ChevronRight, BookOpen, CalendarDays, Bell, Trophy , Archive } from 'lucide-react';
 import { useStore } from '../store';
 
 export function Dashboard() {
@@ -9,6 +9,7 @@ export function Dashboard() {
     { path: '/students', icon: Users, label: 'Data Siswa', desc: 'Kelola data dan level atlet', color: 'text-green-400', glow: 'drop-shadow-[0_0_10px_#4ade80] [text-shadow:0_0_10px_#4ade80]' },
     { path: '/coaches', icon: UserSquare, label: 'Data Coach', desc: 'Profil dan sertifikasi', color: 'text-cyan-400', glow: 'drop-shadow-[0_0_10px_#22d3ee] [text-shadow:0_0_10px_#22d3ee]' },
     { path: '/assessment', icon: Star, label: 'Penilaian & Absen', desc: 'Input nilai 5 pilar dan kehadiran', color: 'text-fuchsia-400', glow: 'drop-shadow-[0_0_10px_#e879f9] [text-shadow:0_0_10px_#e879f9]' },
+    { path: '/history', icon: Archive, label: 'Log & History', desc: 'Riwayat absensi dan penilaian harian siswa', color: 'text-indigo-400', glow: 'drop-shadow-[0_0_10px_#818cf8] [text-shadow:0_0_10px_#818cf8]' },
     { path: '/evaluation', icon: FileText, label: 'Evaluasi Periode', desc: 'Catatan perkembangan akhir', color: 'text-orange-400', glow: 'drop-shadow-[0_0_10px_#fb923c] [text-shadow:0_0_10px_#fb923c]' },
     { path: '/report', icon: Trophy, label: 'Rapor Siswa', desc: 'Lihat hasil akhir penilaian', color: 'text-lime-400', glow: 'drop-shadow-[0_0_10px_#a3e635] [text-shadow:0_0_10px_#a3e635]' },
     { path: '/notifications', icon: Bell, label: 'Notifikasi', desc: 'Info & pengumuman terbaru', color: 'text-blue-400', glow: 'drop-shadow-[0_0_10px_#60a5fa] [text-shadow:0_0_10px_#60a5fa]' },

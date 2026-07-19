@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { initFirebaseSync } from './lib/firebase';
 import { Layout } from './components/Layout';
 import { Dashboard } from './components/Dashboard';
 import { Students } from './components/Students';
@@ -16,8 +17,20 @@ import { Coaches } from './components/Coaches';
 import { Material } from './components/Material';
 import { Schedule } from './components/Schedule';
 import { Notifications } from './components/Notifications';
+import { History } from './components/History';
 
 export default function App() {
+  useEffect(() => {
+    try {
+      const unsubscribe = initFirebaseSync();
+      return () => {
+        if (unsubscribe) unsubscribe();
+      };
+    } catch (e) {
+      console.error("Firebase sync init failed:", e);
+    }
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -25,6 +38,7 @@ export default function App() {
           <Route index element={<Dashboard />} />
           <Route path="students" element={<Students />} />
           <Route path="assessment" element={<Assessment />} />
+          <Route path="history" element={<History />} />
           <Route path="report" element={<Report />} />
           <Route path="settings" element={<Settings />} />
           <Route path="evaluation" element={<Evaluation />} />

@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+const fs = require('fs');
+
+const code = `import React, { useState } from 'react';
 import { ArrowLeft, Bell, Info, CheckCircle, AlertTriangle, Plus, MessageCircle, X, Save, Trash2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cn } from './Layout';
@@ -57,8 +59,8 @@ export function Notifications() {
 
   const shareToWhatsApp = (notif: NotificationMessage, e: React.MouseEvent) => {
     e.stopPropagation();
-    const text = `*${notif.title}*\n\n${notif.message}\n\n---\nUntuk membalas, silakan hubungi: https://wa.me/${settings.academy.phone.replace(/\D/g, '')}`;
-    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+    const text = \`*\${notif.title}*\\n\\n\${notif.message}\\n\\n---\\nUntuk membalas, silakan hubungi: https://wa.me/\${settings.academy.phone.replace(/\\D/g, '')}\`;
+    window.open(\`https://wa.me/?text=\${encodeURIComponent(text)}\`, '_blank');
   };
 
   return (
@@ -226,3 +228,7 @@ export function Notifications() {
     </div>
   );
 }
+`;
+
+fs.writeFileSync('src/components/Notifications.tsx', code);
+console.log('patched Notifications.tsx');

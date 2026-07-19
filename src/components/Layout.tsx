@@ -1,5 +1,5 @@
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { Home, Users, Star, Trophy, Volume2, VolumeX, Moon, Sun, Dribbble, X, FileText, UserSquare, BookOpen, CalendarDays, Bell, Settings } from 'lucide-react';
+import {  Home, Users, Star, Trophy, Volume2, VolumeX, Moon, Sun, Dribbble, X, FileText, UserSquare, BookOpen, CalendarDays, Bell, Settings , Archive } from 'lucide-react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { useStore } from '../store';
@@ -158,6 +158,7 @@ export function Layout() {
     { path: '/students', icon: Users, label: 'Siswa' },
     { path: '/coaches', icon: UserSquare, label: 'Coach' },
     { path: '/assessment', icon: Star, label: 'Nilai' },
+    { path: '/history', icon: Archive, label: 'History' },
     { path: '/evaluation', icon: FileText, label: 'Evaluasi' },
     { path: '/report', icon: Trophy, label: 'Rapor' },
     { path: '/notifications', icon: Bell, label: 'Notif' },

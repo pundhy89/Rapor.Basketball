@@ -56,10 +56,10 @@ export function IdCardModal({ person, onClose }: IdCardProps) {
       
       <div 
         ref={cardRef} 
-        className="w-[280px] h-[458px] relative rounded-3xl overflow-hidden bg-white/50 dark:bg-black/50 backdrop-blur-md border-2 border-white/30 shadow-[0_0_25px_rgba(168,85,247,0.6)] flex flex-col items-center pt-8 pb-6"
+        className="w-[280px] h-[458px] relative rounded-3xl overflow-hidden bg-black/40 backdrop-blur-sm border border-white/20 shadow-xl flex flex-col items-center pt-8 pb-6"
       >
         {/* Cyberpunk Background Accents */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-purple-600 to-orange-600 opacity-90" />
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/80 via-[#0B0C10]/80 to-slate-900/80 pointer-events-none" />
         
         {/* Outer glowing edge inner container */}
         <div className="absolute inset-1.5 rounded-2xl border border-white/20 shadow-[inset_0_0_20px_rgba(255,255,255,0.2)] pointer-events-none" />
@@ -109,21 +109,21 @@ export function IdCardModal({ person, onClose }: IdCardProps) {
             </div>
           </div>
           
-          <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-white/50 to-transparent" />
+          <div className="h-[1.5px] w-full bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 opacity-80" />
           
           <div className="flex items-center gap-2">
             <Mail className="w-4 h-4 text-white drop-shadow-sm" />
             <span className="truncate">{person.email || `${person.name.toLowerCase().replace(/\s+/g, '.')}@email.com`}</span>
           </div>
 
-          <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-white/50 to-transparent" />
+          <div className="h-[1.5px] w-full bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 opacity-80" />
 
           <div className="flex items-center gap-2">
             <MapPin className="w-4 h-4 text-white drop-shadow-sm" />
             <span className="truncate">{person.address || 'Basketball Academy, ID'}</span>
           </div>
           
-          <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-white/50 to-transparent" />
+          <div className="h-[1.5px] w-full bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 opacity-80" />
         </div>
       </div>
       

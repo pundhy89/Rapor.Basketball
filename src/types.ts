@@ -121,3 +121,12 @@ export interface Settings {
   clickSoundEnabled?: boolean;
   theme: "light" | "dark";
 }
+
+export interface NotificationMessage {
+  id: string;
+  type: 'info' | 'success' | 'warning' | 'error';
+  title: string;
+  message: string;
+  time: string;
+  isNew: boolean;
+}
